@@ -60,7 +60,7 @@ def apply_metadata_to_file(opts: argparse.Namespace, path: str, cover_data: byte
     audiofile.tag.artist = opts.author
     audiofile.tag.album_artist = opts.author
     audiofile.tag.album = opts.title
-    audiofile.tag.title = os.path.splitext(path)[0]
+    audiofile.tag.title = os.path.splitext(os.path.basename(path))[0]
     audiofile.tag.disc_num = 1
 
     # Attempt to set the track number
