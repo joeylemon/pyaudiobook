@@ -38,8 +38,13 @@ Book 07 - Harry Potter and the Deathly Hallows
 
 Running the below command will apply the given cover.jpg image as the cover art to each chapter in the directory:
 ```sh
-> python pyaudiobook.py "~/Desktop/Book 07 - Harry Potter and the Deathly Hallows" --cover "~/Desktop/cover.jpg"
+> python pyaudiobook.py "~/Desktop/Book 07 - Harry Potter and the Deathly Hallows" \
+  --cover "~/Desktop/cover.jpg" \
+  --author "J.K. Rowling" \
+  --title "Harry Potter and the Deathly Hallows"
 ```
+
+You must set the title property if you wish for each of the audiobook files to fall under the same audiobook in many popular audiobook programs.
 
 ## Installation
 
