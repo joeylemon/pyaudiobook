@@ -11,7 +11,9 @@ class TestHelpers(unittest.TestCase):
 
     def test_get_track_num(self):
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter 1 - Test.mp3"), 1)
+        self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter 01 - Test.mp3"), 1)
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter1 - Test.mp3"), 1)
+        self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter01 - Test.mp3"), 1)
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Track1 - Test.mp3"), 1)
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter 15 - Test.mp3"), 15)
         self.assertRaises(ValueError, pyaudiobook.get_track_num, "/home/user/audiobook/Chapter I - Test.mp3")

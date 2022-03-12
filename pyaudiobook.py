@@ -63,7 +63,6 @@ def apply_metadata_to_file(opts: argparse.Namespace, path: str, cover_data: byte
     # Attempt to set the track number
     try:
         audiofile.tag.track_num = get_track_num(path)
-        print("set track num for", path, " to", get_track_num(path))
     except:
         pass
 
@@ -73,14 +72,19 @@ def apply_metadata_to_file(opts: argparse.Namespace, path: str, cover_data: byte
 def apply_metadata_to_dir(opts: argparse.Namespace):
     """ Parse the directory and apply cover art to all MP3s. """
 
-    files = os.listdir(opts.dir)
+    paths = [os.path.join(opts.dir, f) for f in os.listdir(opts.dir)]
+    valid_paths = [p for p in paths if os.path.isfile(p) and is_mp3_path(p)]
+
     cover_data = open(opts.cover, "rb").read()
     cover_mime = mimetypes.MimeTypes().guess_type(opts.cover)[0]
 
-    for filename in files:
-        path = os.path.join(opts.dir, filename)
-        if os.path.isfile(path) and is_mp3_path(path):
-            apply_metadata_to_file(opts, path, cover_data, cover_mime)
+    total = len(valid_paths)
+    done = 0
+
+    for path in valid_paths:
+        apply_metadata_to_file(opts, path, cover_data, cover_mime)
+        done += 1
+        print(f"({done}/{total}) Finished {path}")
 
 
 if __name__ == "__main__":
