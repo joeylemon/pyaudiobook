@@ -1,6 +1,7 @@
 # pyaudiobook
+![Tests](https://github.com/joeylemon/pyaudiobook/workflows/Tests/badge.svg)
 
-A Python script to apply metadata to audiobook directories, including applying cover art images to each file.
+A Python script to apply metadata to audiobook directories, including setting the author/title and applying cover art images to each file. The program will attempt to parse each file's name to extract the chapter number and update the metadata accordingly.
 
 <p align="center"><img src="https://user-images.githubusercontent.com/8845512/158066234-a5d7ebe7-1e71-43d3-865d-ac71b9c75508.png" /></p>
 
