@@ -36,7 +36,7 @@ Book 07 - Harry Potter and the Deathly Hallows
 ├── ...
 ```
 
-Running the below command will apply the given cover.jpg image as the cover art to each chapter in the directory:
+Running the below command will apply the appropriate metadata to each mp3 file in the directory:
 ```sh
 > python pyaudiobook.py "~/Desktop/Book 07 - Harry Potter and the Deathly Hallows" \
   --cover "~/Desktop/cover.jpg" \
