@@ -2,6 +2,8 @@
 
 A Python script to apply metadata to audiobook directories, including applying cover art images to each file.
 
+<p align="center"><img src="https://user-images.githubusercontent.com/8845512/158066173-042030e7-7e5f-4024-892e-eab01e53bb3c.png" /></p>
+
 ## Usage
 ```sh
 > python pyaudiobook.py --help
