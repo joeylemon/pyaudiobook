@@ -16,6 +16,7 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter01 - Test.mp3"), 1)
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Track1 - Test.mp3"), 1)
         self.assertEqual(pyaudiobook.get_track_num("/home/user/audiobook/Chapter 15 - Test.mp3"), 15)
+        self.assertEqual(pyaudiobook.get_track_num("056 - Hitchhikers Guide To The Galaxy Pt 56 Of 66.mp3"), 56)
         self.assertRaises(ValueError, pyaudiobook.get_track_num, "/home/user/audiobook/Chapter I - Test.mp3")
 
 

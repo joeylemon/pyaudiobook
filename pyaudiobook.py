@@ -14,7 +14,12 @@ def get_arguments() -> argparse.Namespace:
     parser.add_argument(
         "--cover", help="specify the cover art file", default="cover.jpg")
     parser.add_argument("--author", help="specify the book author")
-    parser.add_argument("--title", help="specify the book title")
+    parser.add_argument(
+        "--title", help="specify the book title", required=True)
+    parser.add_argument(
+        "--filter", help="only include audio files containing the given string", default="")
+    parser.add_argument(
+        "--rename", help="rename the audio files to title and chapter", default=False, action="store_true")
     args = parser.parse_args()
 
     args.dir = os.path.abspath(args.dir)
@@ -39,15 +44,29 @@ def is_mp3_path(path: str) -> bool:
 def get_track_num(path: str) -> int:
     """ Try to find the track number from an audiofile path. """
 
-    regex = re.search('(?:chapter|track|chp)(?:\s*)(\d+)', path.lower())
+    # (?:\s*) zero or more whitespace characters
+    # (\d+) one or more digits
+    regex = re.search('(?:chapter|track|chp|pt)(?:\s*)(\d+)', path.lower())
     if regex is None:
-        raise ValueError('path has no track number')
+        raise ValueError(f'path {path} has no track number')
 
     return int(regex.group(1))
 
 
+def rename_file(opts: argparse.Namespace, path: str) -> str:
+    """ Rename the given path to a standard format with title and chapter. """
+
+    track_num = get_track_num(path)
+    new_path = os.path.join(opts.dir, f"{opts.title} - Chapter {track_num}.mp3")
+    os.rename(path, new_path)
+    return new_path
+
+
 def apply_metadata_to_file(opts: argparse.Namespace, path: str, cover_data: bytes, cover_mime: str):
     """ Apply metadata to the given audiofile path. """
+
+    if opts.rename:
+        path = rename_file(opts, path)
 
     audiofile = eyed3.load(path)
     if audiofile.tag is None:
@@ -76,7 +95,8 @@ def apply_metadata_to_dir(opts: argparse.Namespace):
     """ Parse the directory and apply cover art to all MP3s. """
 
     paths = [os.path.join(opts.dir, f) for f in os.listdir(opts.dir)]
-    valid_paths = [p for p in paths if os.path.isfile(p) and is_mp3_path(p)]
+    valid_paths = [p for p in paths if os.path.isfile(
+        p) and is_mp3_path(p) and opts.filter in p]
 
     cover_data = open(opts.cover, "rb").read()
     cover_mime = mimetypes.MimeTypes().guess_type(opts.cover)[0]
